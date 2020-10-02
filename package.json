@@ -13,8 +13,16 @@
     "email": "oyeleyeolatunbosunfestus@gmail.com"
   },
   "description": "Movie Application",
-  "license": "SEE LICENSE IN <your-license-filename>",
-  "repository": "<fill-your-repository-here>",
+  "license": "MIT",
+  "keywords": [
+    "nativescript-vue",
+    "android",
+    "vue native",
+    "native app",
+    "vue-native",
+    "movie app",
+    "movie application"
+  ],
   "dependencies": {
     "axios": "^0.19.0",
     "nativescript-accordion": "^6.0.0-beta.2",
