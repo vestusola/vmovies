@@ -24,6 +24,7 @@
     "movie application"
   ],
   "dependencies": {
+    "acorn": "^8.0.3",
     "axios": "^0.19.0",
     "nativescript-accordion": "^6.0.0-beta.2",
     "nativescript-appinfo": "^0.4.1",
@@ -34,7 +35,9 @@
     "nativescript-theme-core": "~1.0.6",
     "nativescript-ui-listview": "~7.0.0",
     "nativescript-vue": "~2.4.0",
-    "tns-core-modules": "~6.0.0"
+    "serialize-javascript": "^5.0.1",
+    "tns-core-modules": "~6.0.0",
+    "yargs-parser": "^20.2.1"
   },
   "devDependencies": {
     "@babel/core": "~7.1.0",
@@ -42,7 +45,7 @@
     "babel-loader": "~8.0.0",
     "nativescript-dev-webpack": "~1.1.0",
     "nativescript-vue-template-compiler": "~2.4.0",
-    "node-sass": "^4.14.1",
+    "node-sass": "^4.7.1",
     "vue-loader": "~15.4.0"
   }
 }
