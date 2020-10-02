@@ -1,5 +1,5 @@
 <template>
-  <Page class="page" @load="network_state">
+  <Page class="page">
     <ActionBar>
       <Label class="actionbar-title" text="VMovies" horizontalAlignment="center" />
     </ActionBar>
@@ -47,7 +47,7 @@ import TVSeriesList from "./TVSeriesList";
 import Search from "./Search";
 import About from "./About";
 import api from "../shared/movie/api-service";
-import NoConnectivity from './NoConnectivity';
+import NoConnectivity from "./NoConnectivity";
 const connectivity = require("connectivity");
 export default {
   components: {
@@ -59,68 +59,36 @@ export default {
   },
   data() {
     return {
-      network_state: ""
+      network_state: 0
     };
   },
   methods: {
-    checkNetwork() {
-      const connectionType = connectivity.getConnectionType();
-      switch (connectionType) {
-        case connectivity.connectionType.none:
-          alert("No network connection available!");
-          break;
-        case connectivity.connectionType.wifi:
-          alert("You are on wifi!");
-          break;
-        case connectivity.connectionType.mobile:
-          alert("You are on a mobile data network!");
-          break;
-      }
-    },
     monitorNetworkStart() {
-      console.log("Monitoring network connection changes.");
+      console.log("Monitoring network connection changes on App.");
       connectivity.startMonitoring(newConnectionType => {
         switch (newConnectionType) {
           case connectivity.connectionType.none:
-            this.$navigateTo(NoConnectivity, {
-              transition: "SlideDown"
-            });
-            this.network_state = "No network detected!";
-            console.log("No network connection available!");
+            this.network_state = 0;
             break;
           case connectivity.connectionType.wifi:
             console.log("You are now on wifi!");
-            this.network_state = "Connected to wifi!";
+            this.network_state = 1;
             break;
           case connectivity.connectionType.mobile:
-            console.log("You are now on a mobile data network!");
-            this.network_state = "Connected to mobile!";
+            this.network_state = 2;
             break;
           case connectivity.connectionType.ethernet:
-            console.log("You are now on a ethernet network!");
-            this.network_state = "Connected to ethernet!";
+            this.network_state = 3;
             break;
         }
       });
-    },
-    checkNetworkState() {
-      if (navigator.onLine) {
-        console.log('Network alive');
-      } else {
-        this.$navigateTo(NoConnectivity, {
-          transition: "SlideDown"
-        });
-      }
     }
-  },
-  created() {
-    this.monitorNetworkStart();
   },
   watch: {
     network_state() {
       this.monitorNetworkStart();
     }
-  },
+  }
 };
 </script>
 

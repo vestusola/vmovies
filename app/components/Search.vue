@@ -221,22 +221,6 @@ export default {
           });
       }
     },
-    checkNetwork() {
-      const connectionType = connectivity.getConnectionType();
-      switch (connectionType) {
-        case connectivity.connectionType.none:
-          this.$navigateTo(NoConnectivity, {
-            transition: "SlideDown"
-          });
-          break;
-        case connectivity.connectionType.wifi:
-          console.log("You are on wifi!");
-          break;
-        case connectivity.connectionType.mobile:
-          console.log("You are on a mobile data network!");
-          break;
-      }
-    },
     monitorNetworkStart() {
       console.log("Monitoring network connection changes.");
       connectivity.startMonitoring(newConnectionType => {

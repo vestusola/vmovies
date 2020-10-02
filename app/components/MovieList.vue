@@ -101,7 +101,8 @@ export default {
           }
         }
       ],
-      no_record: false
+      no_record: false,
+      network_state: 0
     };
   },
   components: {
@@ -368,11 +369,8 @@ export default {
     }
   },
   watch: {
-    monitorNetworkStart() {
+    network_state() {
       this.monitorNetworkStart();
-    },
-    checkNetworkState() {
-      this.checkNetworkState();
     }
   },
 };

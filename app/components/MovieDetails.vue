@@ -96,7 +96,6 @@
     </ScrollView>
   </Page>
 </template>
-
 <script>
 import axios from "axios";
 import api from "../shared/movie/api-service";
@@ -106,7 +105,8 @@ export default {
   props: ["movie_id"],
   data() {
     return {
-      movieData: {}
+      movieData: {},
+      network_state: 0
     };
   },
   components: {
@@ -145,60 +145,46 @@ export default {
       var min = time % 60;
       return `${parseInt(hour)}hr ${min} mins`;
     },
-    checkNetwork() {
-      const connectionType = connectivity.getConnectionType();
-      switch (connectionType) {
-        case connectivity.connectionType.none:
-          alert("No network connection available!");
-          break;
-        case connectivity.connectionType.wifi:
-          alert("You are on wifi!");
-          break;
-        case connectivity.connectionType.mobile:
-          alert("You are on a mobile data network!");
-          break;
-      }
-    },
     monitorNetworkStart() {
-      console.log("Monitoring network connection changes.");
       connectivity.startMonitoring(newConnectionType => {
         switch (newConnectionType) {
           case connectivity.connectionType.none:
+            this.network_state = 0;
+            console.log("No network connection availables!");
             this.$navigateTo(NoConnectivity, {
-              transition: "SlideDown"
+              transition: "SlideDown",
+              props: { network_state: this.network_state }
             });
-            console.log("No network connection available!");
             break;
           case connectivity.connectionType.wifi:
             console.log("You are now on wifi!");
+            this.network_state = 1;
             break;
           case connectivity.connectionType.mobile:
-            console.log("You are now on a mobile data network!");
+            console.log("You are now on a mobile data network");
+            this.network_state = 2;
+            break;
+          case connectivity.connectionType.ethernet:
+            console.log("You are now on a ethernet network!");
+            this.network_state = 3;
             break;
         }
       });
-    },
-    checkNetworkState() {
-      if (navigator.onLine) {
-        console.log('Network alive');
-      } else {
-        this.$navigateTo(NoConnectivity, {
-          transition: "SlideDown"
-        });
-      }
     }
   },
   created() {
     this.getMovieDetail();
+  },
+  mounted() {
     this.monitorNetworkStart();
   },
   watch: {
-    monitorNetworkStart() {
+    network_state() {
       this.monitorNetworkStart();
     },
-    checkNetworkState() {
-      this.checkNetworkState();
+    movieData() {
+      this.getMovieDetail();
     }
-  },
+  }
 };
 </script>

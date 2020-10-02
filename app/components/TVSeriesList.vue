@@ -90,7 +90,8 @@ export default {
           }
         }
       ],
-      no_record: false
+      no_record: false,
+      network_state: 0
     };
   },
   components: {
@@ -236,47 +237,23 @@ export default {
           });
       }
     },
-    checkNetwork() {
-      const connectionType = connectivity.getConnectionType();
-      switch (connectionType) {
-        case connectivity.connectionType.none:
-          alert("No network connection available!");
-          break;
-        case connectivity.connectionType.wifi:
-          alert("You are on wifi!");
-          break;
-        case connectivity.connectionType.mobile:
-          alert("You are on a mobile data network!");
-          break;
-      }
-    },
     monitorNetworkStart() {
-      console.log("Monitoring network connection changes.");
       connectivity.startMonitoring(newConnectionType => {
         switch (newConnectionType) {
           case connectivity.connectionType.none:
             this.$navigateTo(NoConnectivity, {
               transition: "SlideDown"
             });
-            console.log("No network connection available!");
+            this.network_state = 0;
             break;
           case connectivity.connectionType.wifi:
-            console.log("You are now on wifi!");
+            this.network_state = 1;
             break;
           case connectivity.connectionType.mobile:
-            console.log("You are now on a mobile data network!");
+            this.network_state = 2;
             break;
         }
       });
-    },
-    checkNetworkState() {
-      if (navigator.onLine) {
-        console.log('Network alive');
-      } else {
-        this.$navigateTo(NoConnectivity, {
-          transition: "SlideDown"
-        });
-      }
     }
   },
   computed: {
@@ -289,12 +266,9 @@ export default {
     },
   },
   watch: {
-    monitorNetworkStart() {
+    network_state() {
       this.monitorNetworkStart();
     },
-    checkNetworkState() {
-      this.checkNetworkState();
-    }
   },
 };
 </script>
