@@ -1,6 +1,7 @@
 # A Mobile Application for movies lover
 ```
-This application is built using nativescript-vue and TheMoviesDB api. It keeps you updated with the latest movie.
+This application is built using nativescript-vue and TheMoviesDB api.
+It keeps you updated with the latest movie.
 ```
 
 # Usage
